@@ -1,7 +1,7 @@
 let data  = d3.csv('wealth-health-2014.csv', d3.autoType).then(data=>{
 
 
-    const margin = ({top: 50, right: 20, bottom: 20, left: 40});
+    const margin = ({top: 50, right: 140, bottom: 20, left: 40});
     const width = 800 - margin.left - margin.right;
     const height = 550 - margin.top - margin.bottom;
     let regions = data.map(d=>d.Region);
@@ -94,16 +94,26 @@ let data  = d3.csv('wealth-health-2014.csv', d3.autoType).then(data=>{
         // add attrs such as alignment-baseline and text-anchor as necessary
         .text("Life Expectancy");
 
-    let legend = group.selectAll('rect')
+    let regionLegend = plot.selectAll('rect')
         .data(colorPal.domain())
         .enter()
         .append('rect')
-        .attr('class','box')
-        .attr('width', 20)
-        .attr('height', 20)
-        .attr('x',width -100)
-        .attr('y',(d,i)=>height-i*15)
+        .attr('class','legend')
+        .attr('width', 25)
+        .attr('height', 25)
+        .attr('x',width-30)
+        .attr('y',(d,i)=>height-i*25 - 200)
         .attr('fill', d=>colorPal(d));
+    let legendLabels= plot.selectAll('div')
+        .data(colorPal.domain())
+        .enter()
+        .append('text')
+        .attr('class','key')
+        .attr("fill", "#F2F2F2")
+        .text(d=>d)
+        .attr('x', width)
+        .attr('y',(d,i)=>height-i*25 - 185)
+        .attr('font-size',12);
     
 
 });
