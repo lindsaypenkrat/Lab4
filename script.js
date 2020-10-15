@@ -82,7 +82,6 @@ let data  = d3.csv('wealth-health-2014.csv', d3.autoType).then(data=>{
         .attr("font-family", "sans-serif")
         .attr("font-size", "15px")
         .attr("fill", "#F2F2F2")
-        // add attrs such as alignment-baseline and text-anchor as necessary
         .text("Income");
 
     plot.append("text")
@@ -91,7 +90,6 @@ let data  = d3.csv('wealth-health-2014.csv', d3.autoType).then(data=>{
         .attr("font-family", "sans-serif")
         .attr("font-size", "15px")
         .attr("fill", "#F2F2F2")
-        // add attrs such as alignment-baseline and text-anchor as necessary
         .text("Life Expectancy");
 
     let regionLegend = plot.selectAll('rect')

@@ -14,9 +14,7 @@
 .tooltip {
 	position: fixed;
     display: none;
-    font-size: 13px;
-    width: auto;
-    height: auto;
+    font-size: 15px;
     padding: 8px;
     background-color: white;
     color: black;
