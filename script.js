@@ -99,10 +99,10 @@ let data  = d3.csv('wealth-health-2014.csv', d3.autoType).then(data=>{
         .enter()
         .append('rect')
         .attr('class','box')
-        .attr('width', 10)
-        .attr('height', 10)
-        .attr('x',450)
-        .attr('y',(d,i)=>300+i*15)
+        .attr('width', 20)
+        .attr('height', 20)
+        .attr('x',width -100)
+        .attr('y',(d,i)=>height-i*15)
         .attr('fill', d=>colorPal(d));
     
 
