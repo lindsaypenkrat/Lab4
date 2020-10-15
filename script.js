@@ -1,9 +1,9 @@
 let data  = d3.csv('wealth-health-2014.csv', d3.autoType).then(data=>{
 
 
-    const margin = ({top: 20, right: 20, bottom: 20, left: 40});
-    const width = 700 - margin.left - margin.right;
-    const height = 500 - margin.top - margin.bottom;
+    const margin = ({top: 50, right: 20, bottom: 20, left: 100});
+    const width = 800 - margin.left - margin.right;
+    const height = 550 - margin.top - margin.bottom;
     let regions = data.map(d=>d.Region);
     let population = data.map(d=>d.Population);
 
@@ -42,6 +42,21 @@ let data  = d3.csv('wealth-health-2014.csv', d3.autoType).then(data=>{
         .attr('r',  d=>rScale(d.Population))
         .attr('stroke','#D7EAF4')
         .attr('fill', d => { return colorPal(d.Region); })
+        .on("mouseenter", (event, d) => {
+            let pos = d3.pointer(event, window)
+    
+            d3.select(".tooltip")
+                .style('display','inline-block')
+                .style('left',pos[0]+'px')
+                .style('top',pos[1]+'px')
+                .html("<h6>Country: " +d.Country + "</h6>" +" Region: " + d.Region + "<br> Population: " + d3.format(',d')(d.Population) + "<br> Income: $" + d3.format(',d')(d.Income) + "<br> Life Expectancy: " + d.LifeExpectancy + " years");
+    
+        })
+
+        .on("mouseleave", (event, d) => {
+            d3.select('.tooltip')
+                .style('display', 'none');
+        });
 
     const xAxis = d3.axisBottom()
         .scale(xScale)
@@ -49,7 +64,7 @@ let data  = d3.csv('wealth-health-2014.csv', d3.autoType).then(data=>{
 
     
     const yAxis = d3.axisLeft()
-        .scale(yScale);
+        .scale(yScale)
         
 
     plot.append("g")
@@ -66,7 +81,7 @@ let data  = d3.csv('wealth-health-2014.csv', d3.autoType).then(data=>{
         .attr('y', height-10)
         .attr("font-family", "sans-serif")
         .attr("font-size", "15px")
-        .attr("fill", "black")
+        .attr("fill", "#F2F2F2")
         // add attrs such as alignment-baseline and text-anchor as necessary
         .text("Income");
 
@@ -75,9 +90,21 @@ let data  = d3.csv('wealth-health-2014.csv', d3.autoType).then(data=>{
         .attr('y', 10)
         .attr("font-family", "sans-serif")
         .attr("font-size", "15px")
-        .attr("fill", "black")
+        .attr("fill", "#F2F2F2")
         // add attrs such as alignment-baseline and text-anchor as necessary
         .text("Life Expectancy");
+
+    let legend = group.selectAll('rect')
+        .data(colorPal.domain())
+        .enter()
+        .append('rect')
+        .attr('class','box')
+        .attr('width', 10)
+        .attr('height', 10)
+        .attr('x',450)
+        .attr('y',(d,i)=>300+i*15)
+        .attr('fill', d=>colorPal(d));
+    
 
 });
 
