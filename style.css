@@ -21,11 +21,20 @@
     background-color: white;
     color: black;
     border-radius: 12px;
-    opacity: 0.9;
+	opacity: 0.9;
+	text-align: left;
   }
 
   body {
 	background-color: #000000;
 	font-family: 'Roboto', sans-serif;
+	text-align: center;
   }
+  h1{
+	color: #fdfdfd;
+  }
+
+  h3{color: #fdfdfd;}
+
+}
   

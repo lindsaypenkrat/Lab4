@@ -1,7 +1,7 @@
 let data  = d3.csv('wealth-health-2014.csv', d3.autoType).then(data=>{
 
 
-    const margin = ({top: 50, right: 20, bottom: 20, left: 100});
+    const margin = ({top: 50, right: 20, bottom: 20, left: 40});
     const width = 800 - margin.left - margin.right;
     const height = 550 - margin.top - margin.bottom;
     let regions = data.map(d=>d.Region);
