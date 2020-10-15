@@ -5,9 +5,11 @@ let data  = d3.csv('wealth-health-2014.csv', d3.autoType).then(data=>{
     const width = 700 - margin.left - margin.right;
     const height = 500 - margin.top - margin.bottom;
     let regions = data.map(d=>d.Region);
+    let population = data.map(d=>d.Population);
 
     let colorPal = d3.scaleOrdinal(d3.schemeSet2)
         .domain(regions);
+    
 
     var plot = d3.select('.chart').append('svg')
         .attr("width", width + margin.left + margin.right)
@@ -15,7 +17,7 @@ let data  = d3.csv('wealth-health-2014.csv', d3.autoType).then(data=>{
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    let incomeMax = d3.max(data, d => d.Income)
+    let popMax = d3.max(data, d => d.Population)
 
     const xScale = d3
         .scaleLinear()
@@ -27,13 +29,17 @@ let data  = d3.csv('wealth-health-2014.csv', d3.autoType).then(data=>{
         .domain([d3.min(data, d => d.LifeExpectancy)-15 , d3.max(data, d => d.LifeExpectancy)])
         .range([height,0]);
 
+    const rScale = d3.scaleSqrt()
+        .domain(d3.extent(data,d=>d.Population))
+        .range([2,18]);
+
     plot.selectAll("circle") // <-- No longer "rect"
         .data(data)
         .enter()
         .append("circle") 
         .attr('cx', d=>xScale(d.Income))
         .attr('cy', d=>yScale(d.LifeExpectancy))
-        .attr('r', 5)
+        .attr('r',  d=>rScale(d.Population))
         .attr('stroke','#D7EAF4')
         .attr('fill', d => { return colorPal(d.Region); })
 
